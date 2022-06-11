@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models.deletion import CASCADE
 
 # Create your models here.
 
@@ -52,3 +54,27 @@ class Projects (models.Model):
 
     def __str__(self):
         return self.title
+    
+    
+class Rating(models.Model):
+    design_rating = models.IntegerField(blank=True,default=0,validators=[MaxValueValidator(10),MinValueValidator(1)])
+    design_rating_average = models.FloatField(default=0.0,blank=True)
+    content_rating = models.IntegerField(blank=True,default=0,validators=[MaxValueValidator(10),MinValueValidator(1)])
+    content_rating_average = models.FloatField(default=0.0,blank=True)
+    usability_rating = models.IntegerField(blank=True,default=0,validators=[MaxValueValidator(10),MinValueValidator(1)])
+    usability_rating_average = models.FloatField(default=0.0,blank=True)
+    aggregate_average_rate = models.FloatField(default=0.0,blank=True)
+    project = models.ForeignKey(Projects,on_delete=CASCADE)
+    user = models.ForeignKey(User,on_delete=CASCADE)
+
+
+    def save_rating(self):
+        self.save()
+
+    @classmethod
+    def get_ratings(cls, id):
+        ratings = Rating.objects.filter(project_id=id).all()
+        return ratings
+
+    def __str__(self):
+        return f'{self.project} Rating'
