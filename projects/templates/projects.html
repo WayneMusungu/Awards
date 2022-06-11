@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+
+{% block content %}
+{{block.super}}
+    <div class="row">
+        {% for project in posts %}
+            <div class="col-md-4 card">
+                <div style="width: 500px; height: 500px;">
+                    <img src="{{project.image.url}}" data-target="#imageModal{{project.id}}" data-toggle="modal" alt="" class="img-fluid" id="eachimage" style="height: 300px; width: 700px; border-radius: 10px;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{project.title}}</h5>
+                        <p class="card-text">{{project.user}}</p>
+                        <p class="card-text">{{project.description}}</p>
+                        <p class="card-text">{{project.link}}</p>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+
+
+
+    </div>
+{% endblock %}
