@@ -60,6 +60,7 @@ def project_details(request, project_id):
            rate.save()
            return HttpResponseRedirect(request.path_info)
    else:
+       date = dt.date.today()
        form = RatingsForm()
    return render(request, 'details.html', {'current_user':current_user,'all_ratings':all_ratings,'project':project,'rating_form': form,'rating_status': rating_status})
 
