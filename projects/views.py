@@ -16,7 +16,7 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
 
 # Create your views here.
-def welcome(request):
+def index(request):
     date = dt.date.today()
     return render (request, 'index.html',{"date": date})
 
