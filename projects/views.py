@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . serializer import ProfileSerializer, ProjectsSerializer
 from . models import Profile, Projects, Rating
+from .forms import RatingsForm
 
 
 from rest_framework import status
@@ -97,14 +98,7 @@ class projectsCreate(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
     
-def project_details(request, image_id):
-    try:
-        image = Projects.objects.get(id=image_id)
-    except ObjectDoesNotExist:
-        raise Http404()
-    
-    return render(request, 'details.html', {'image': image})
-        
+
     
             
             

@@ -7,4 +7,5 @@ urlpatterns = [
    path('otima/',views.profileList.as_view() , name='otima'),
    path('projo/',views.projectsList.as_view() , name='projo'),
    path('create/',views.projectsCreate.as_view() , name='create'),
+   path('details/<int:project_id>', views.project_details, name='image'),
 ]

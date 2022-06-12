@@ -1,0 +1,33 @@
+
+{%extends 'base.html'%}
+
+{% block content %}
+{{block.super}}
+
+<!-- Looping through projects   -->
+<div class="row project">
+    <div class="col-md-2"></div>
+    <!-- displaying projects projects -->
+    <div class="col-md-8">
+
+        <h2 class="text-success">{{ project.title }}</h2>
+
+
+        <img src="{{project.image.url}}" class="img-thumbnail" alt="Image" onclick="window.open(this.src)">
+        <P>{{ project.description}}</P>
+        <h5>Technologies used</h5>
+        <p>{{project.technologies_used}}</p>
+        <div class="row">
+
+            <div class="col-md-4">
+                <a href="{{project.link}}">Live Site</a>
+            </div>
+            <div class="col-md-4">
+                <p>Posted: {{project.pub_date|timesince}} ago</p>
+            </div>
+            <div class="col-md-4"> {% if project.user.username == current_user.username %}
+                <a href="" class="btn btn-danger">Delete</a> {% endif %}</div>
+
+
+
+{% endblock %}
