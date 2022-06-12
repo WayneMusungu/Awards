@@ -21,7 +21,9 @@
 
 </head>
 <body>
-    {% block content %} {% include "navbar.html" %} <p style="text-align: center;">{{date|date:"l d-F Y"}}</p> {%endblock%}
+  
+    {% block content %} <p style="text-align: center;">{{date|date:"l d-F Y"}}</p> 
+    {%endblock%}
 
     {% block scripts %}
       <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
