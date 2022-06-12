@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 import datetime as dt
@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . serializer import ProfileSerializer, ProjectsSerializer
 from . models import Profile, Projects, Rating
-from .forms import RatingsForm
+from .forms import RatingsForm, ProjectsPostForm
 
 
 from rest_framework import status
@@ -63,6 +63,19 @@ def project_details(request, project_id):
        form = RatingsForm()
    return render(request, 'details.html', {'current_user':current_user,'all_ratings':all_ratings,'project':project,'rating_form': form,'rating_status': rating_status})
 
+
+def post_project(request):
+    if request.method == 'POST':
+        post_form = ProjectsPostForm(request.POST,request.FILES) 
+        if post_form.is_valid():
+            new_post = post_form.save(commit = False)
+            new_post.user = request.user
+            new_post.save()
+        return redirect('projects')
+
+    else:
+        post_form = ProjectsPostForm()
+    return render(request,'post_project.html',{"post_form":post_form})
 
 
 #Create a function that will Get all the profileList
