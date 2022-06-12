@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from . serializer import ProfileSerializer, ProjectsSerializer
 from . models import Profile, Projects, Rating
 from .forms import RatingsForm, ProjectsPostForm, ProfileForm
+from django.contrib.auth.decorators import login_required
 
 
 from rest_framework import status
@@ -17,10 +18,13 @@ def welcome(request):
     date = dt.date.today()
     return render (request, 'index.html',{"date": date})
 
+@login_required(login_url='/accounts/login/')
 def projects(request):
     post = Projects.objects.all()
     return render (request, 'projects.html',{"posts": post})
 
+
+@login_required(login_url='/accounts/login/')
 def project_details(request, project_id):
    current_user = request.user
    all_ratings = Rating.objects.filter(project_id=project_id).all()
@@ -64,7 +68,7 @@ def project_details(request, project_id):
        form = RatingsForm()
    return render(request, 'details.html', {'current_user':current_user,'all_ratings':all_ratings,'project':project,'rating_form': form,'rating_status': rating_status})
 
-
+@login_required(login_url='/accounts/login/')
 def post_project(request):
     if request.method == 'POST':
         post_form = ProjectsPostForm(request.POST,request.FILES) 
@@ -91,6 +95,7 @@ def updateprofile(request):
         profileform= ProfileForm()
     return render(request, 'update.html', {'profileform': profileform})
 
+@login_required(login_url='/accounts/login/')
 def search(request):
     if 'projects' in request.GET and request.GET["projects"]:
         search_term = request.GET.get("projects")
@@ -101,6 +106,8 @@ def search(request):
     else:
         message = "You haven't searched for any term"
         return render(request,'search.html',{"message":message})
+    
+    
 #Create a function that will Get all the profileList
             
 # @api_view(['GET'])
