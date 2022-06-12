@@ -9,6 +9,8 @@ from . serializer import ProfileSerializer, ProjectsSerializer
 from . models import Profile, Projects, Rating
 from .forms import RatingsForm, ProjectsPostForm, ProfileForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages 
+from django.contrib.auth import authenticate, login, logout
 
 
 from rest_framework import status
@@ -19,9 +21,14 @@ def welcome(request):
     return render (request, 'index.html',{"date": date})
 
 @login_required(login_url='/accounts/login/')
-def projects(request):
+def projects(request):  
+
+    # Function that gets the date
     post = Projects.objects.all()
-    return render (request, 'projects.html',{"posts": post})
+    
+    
+    
+    return render(request, 'projects.html',{'posts':post})
 
 
 @login_required(login_url='/accounts/login/')
@@ -64,23 +71,40 @@ def project_details(request, project_id):
            rate.save()
            return HttpResponseRedirect(request.path_info)
    else:
-       date = dt.date.today()
        form = RatingsForm()
    return render(request, 'details.html', {'current_user':current_user,'all_ratings':all_ratings,'project':project,'rating_form': form,'rating_status': rating_status})
+@login_required(login_url='/accounts/login/')
+def delete_post(request, pk):
+    post = Projects.objects.get(id=pk)
+    
+    if request.method == 'POST':
+        try:
+            post.delete()
+            return redirect('projects')
+        except Exception:
+            messages.error('Post does not exist')
 
+    context = { 'obj':post }
+    return render(request, 'delete.html', context)
 @login_required(login_url='/accounts/login/')
 def post_project(request):
+    current_user = request.user
     if request.method == 'POST':
-        post_form = ProjectsPostForm(request.POST,request.FILES) 
-        if post_form.is_valid():
-            new_post = post_form.save(commit = False)
-            new_post.user = request.user
-            new_post.save()
+        form =ProjectsPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            projects = form.save(commit=False)
+            projects.editor = current_user
+            projects.save()
         return redirect('projects')
-
+    
     else:
-        post_form = ProjectsPostForm()
-    return render(request,'post_project.html',{"post_form":post_form})
+        form =ProjectsPostForm()
+    return render(request, 'post_project.html', {"form": form})
+@login_required(login_url='/accounts/login/')    
+def profile(request):
+    image = Projects.objects.all()
+    profile = Profile.objects.all()
+    return render(request, 'profile.html', {"profile": profile, "image": image})
 
 def updateprofile(request):
     current_user = request.user
@@ -97,16 +121,38 @@ def updateprofile(request):
 
 @login_required(login_url='/accounts/login/')
 def search(request):
-    if 'projects' in request.GET and request.GET["projects"]:
-        search_term = request.GET.get("projects")
-        search_projects = Projects.search_by_title(search_term)
-        message = f"{search_term}"
-
-        return render(request,'search.html', {"message":message,"projects":search_projects})
+    if 'project' in request.GET and request.GET['project']:
+        project = request.GET.get("project")
+        results = Projects.search_project(project)
+        message = f'project'
+        return render(request, 'search.html', {'projects': results, 'message': message})
     else:
-        message = "You haven't searched for any term"
-        return render(request,'search.html',{"message":message})
-    
+        message = "You haven't searched for anything, please try again"
+    return render(request, 'search.html', {'message': message})
+
+@login_required(login_url='login')
+def update_project(request, pk):
+    post = Projects.objects.get(id=pk)
+    form = ProjectsPostForm(instance=post)
+
+    if request.user != post.user:
+        messages.error(request, 'You are not the author of the post!')
+        return redirect('projects')
+
+    if request.method == 'POST':
+        form = ProjectsPostForm(request.POST, instance=post)
+        if form.is_valid():
+            print(request.POST)
+            image = form.save(commit=False)
+            image.save()
+            return redirect('projects')
+
+    context = { 'form':form }
+    return render(request, 'post_project.html', context)
+@login_required(login_url='login')
+def logout_user(request):
+    logout(request)
+    return redirect('index')
     
 #Create a function that will Get all the profileList
             
