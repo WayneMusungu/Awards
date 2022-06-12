@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . serializer import ProfileSerializer, ProjectsSerializer
 from . models import Profile, Projects, Rating
-from .forms import RatingsForm, ProjectsPostForm
+from .forms import RatingsForm, ProjectsPostForm, ProfileForm
 
 
 from rest_framework import status
@@ -76,6 +76,19 @@ def post_project(request):
     else:
         post_form = ProjectsPostForm()
     return render(request,'post_project.html',{"post_form":post_form})
+
+def updateprofile(request):
+    current_user = request.user
+    if request.method == 'POST':
+        profileform = ProfileForm(request.POST, request.FILES)
+        if profileform.is_valid():
+            profile = profileform.save(commit=False)
+            profile.user = current_user
+            profile.save()
+        return redirect('profile')
+    else:
+        profileform= ProfileForm()
+    return render(request, 'update.html', {'profileform': profileform})
 
 
 #Create a function that will Get all the profileList
