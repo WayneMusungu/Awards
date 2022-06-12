@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from . serializer import ProfileSerializer, ProjectsSerializer
 from . models import Profile, Projects, Rating
 
+
 from rest_framework import status
 
 # Create your views here.
