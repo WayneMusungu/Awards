@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 # Create your tests here.
 
-
 class ProfileTestClass(TestCase):
     def setUp(self):
         self.user = User(id=1, username='Wayne', password='1234')
@@ -21,3 +20,4 @@ class ProfileTestClass(TestCase):
         
         
         
+#
