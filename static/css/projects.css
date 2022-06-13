@@ -12,8 +12,8 @@ body {
     padding: 2rem;
     font-family: var(--font-family);
     color: var(--dark-color);
-    background: rgb(238, 174, 202);
-    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    background: rgb(54,217,182);
+    background: radial-gradient(circle, rgba(54,217,182, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
 h1 {
