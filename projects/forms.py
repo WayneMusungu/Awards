@@ -13,7 +13,7 @@ class RatingsForm(forms.ModelForm):
 class ProjectsPostForm(forms.ModelForm):
     class Meta:
        model = Projects
-       fields = '__all__'
+       fields = ['title', 'user', 'image', 'description', 'technologies_used', 'link']
 
 
 class ProfileForm(forms.ModelForm):
