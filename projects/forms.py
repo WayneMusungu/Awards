@@ -8,7 +8,7 @@ from .models import Profile,Projects,Rating
 class RatingsForm(forms.ModelForm):
     class Meta:
         model = Rating
-        fields = '__all__'
+        fields = ['design_rating', 'usability_rating', 'content_rating']
         
 class ProjectsPostForm(forms.ModelForm):
     class Meta:
