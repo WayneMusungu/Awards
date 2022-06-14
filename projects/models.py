@@ -2,11 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models.deletion import CASCADE
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
 class Profile (models.Model):
     bio = models.CharField(max_length=300)
+    image = CloudinaryField('image')
     image = models.ImageField(upload_to='profile_images')
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     
@@ -22,7 +24,8 @@ class Profile (models.Model):
         
 class Projects (models.Model):
     title = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='profile_images')
+    image = CloudinaryField('image')
+    # image = models.ImageField(upload_to='profile_images')
     description = models.TextField()
     location = models.CharField(max_length=50, blank=True)
     technologies_used =models.TextField()

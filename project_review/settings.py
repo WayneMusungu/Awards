@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +30,7 @@ SECRET_KEY = 'django-insecure-6o46ym&ry)ejucmrzc+05(9i4vh-)=q8-5+7e6xyv-m51ws56a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -142,3 +147,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REGISTER_REDIRECT_URL='projects'
 LOGIN_REDIRECT_URL='projects'
+
+cloudinary.config( 
+  cloud_name = "dhmbjiskt", 
+  api_key = "335994163622817", 
+  api_secret = "yoEvtKnCdOIAOkF7vgcTnhcY4Rk",
+  secure = True
+)
