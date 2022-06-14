@@ -4,8 +4,10 @@ from django.http import Http404, HttpResponseRedirect, JsonResponse
 import datetime as dt
 
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.response import Response
 from . serializer import ProfileSerializer, ProjectsSerializer
+from rest_framework.renderers import JSONRenderer
 from . models import Profile, Projects, Rating
 from .forms import RatingsForm, ProjectsPostForm, ProfileForm
 from django.contrib.auth.decorators import login_required
@@ -159,27 +161,39 @@ def logout_user(request):
     
 #Create a function that will Get all the profileList
             
-# @api_view(['GET'])
-# def profileList(request):
-#     profiles = Profile.objects.all()
-#     serializer = ProfileSerializer(profiles, many=True)
-#     return Response(serializer.data)
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def profileList(request):
+    profiles = Profile.objects.all()
+    serializer = ProfileSerializer(profiles, many=True)
+    return Response(serializer.data)
+# Create a class based views that will Get all the profileList
 
-#Create a class based views that will Get all the profileList
-
-class profileList(APIView):
-   def get(self, request, format=None):
-       all_profiles = Profile.objects.all()
-       serializer = ProfileSerializer(all_profiles, many=True)
-       return Response(serializer.data)
-
-class projectsList(APIView):
-    
-    def get(self, request, format=None):
-        all_projects = Projects.objects.all()
-        serializer = ProjectsSerializer(all_projects, many=True)
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def projectList(request):
+    all_projects = Projects.objects.all()
+    serializer = ProjectsSerializer(all_projects, many=True)
         
-        return Response(serializer.data)
+    return Response(serializer.data)
+    
+
+# class profileList(APIView):
+#    def get(self, request, format=None):
+#        all_profiles = Profile.objects.all()
+#        serializer = ProfileSerializer(all_profiles, many=True)
+#        return Response(serializer.data)
+
+
+# @api_view(['GET'])
+
+# class projectsList(APIView):
+    
+#     def get(self, request, format=None):
+#         all_projects = Projects.objects.all()
+#         serializer = ProjectsSerializer(all_projects, many=True)
+        
+#         return Response(serializer.data)
     
 class projectsCreate(APIView):
     def post(self, request, format=None):
