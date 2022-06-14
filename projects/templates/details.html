@@ -1,9 +1,32 @@
-{%extends 'base.html'%} {% load bootstrap5 %} {% block content %} {{ block.super}}
+{%extends 'base.html'%} {% load bootstrap5 %} {% block content %}
 
 <div class="container-fluid">
     <div id="random" class="min-vh-75">
-        <h1 style="text-align: center;">Rate & Get your project rated in terms of:</h1>
-        <ol>
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <!-- <a class="navbar-brand" href="{%url 'projects'%}">Home</a> -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <button style="margin-left: 200px;" type="button" class="btn btn-outline-primary">
+                            <a style="color: black;" class="nav-link active" aria-current="page" href="{%url 'projects'%}">Home</a></button>
+                        </li>
+                        <li class="nav-item">
+                            <button  style="margin-left: 1000px;" type="button" class="btn btn-outline-secondary" ><a class="nav-link" style="color: black;" href="{% url 'logout' %}">Logout</a></button>
+                        </li>
+                    </ul>
+                    <!-- <form action="{% url 'search' %}" class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form> -->
+                </div>
+            </div>
+        </nav>
+        <h1 style="text-align: center;">Rate & Get your project rated in terms of  Design, Usability and Content</h1>
+        <!-- <ol>
             <li>
 
                 <div style="text-align: center;" class="title">Design => An effective website design should fulfil its intended function by conveying its particular message whilst simultaneously engaging the visitor.</div>
@@ -24,7 +47,7 @@
             </li>
 
 
-        </ol>
+        </ol> -->
     </div>
 
     <!-- Looping through projects   -->

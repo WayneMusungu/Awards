@@ -16,11 +16,11 @@
                         <button type="button" class="btn btn-outline-primary">
                         <a style="color: black;" class="nav-link active" aria-current="page" href="{%url 'post'%}">Post Project</a></button>
                     </li>
-                    <li class="nav-item">
-                        <button style="margin-left: 10px;" type="button" class="btn btn-outline-primary"><a style="color: black;" class="nav-link" href="{%url 'profile'%}">Profile</a></button>
+                    <!-- <li class="nav-item">
+                        <button style="margin-left: 10px;" type="button" class="btn btn-outline-primary"><a style="color: black;" class="nav-link" href="#">Profile</a></button>
                        
                     </li>
-    
+     -->
     
                     <li class="nav-item">
                         <button  style="margin-left: 1000px;" type="button" class="btn btn-outline-secondary" ><a class="nav-link" style="color: black;" href="{% url 'logout' %}">Logout</a></button>
@@ -69,12 +69,9 @@
                     <h5 class="card-title">{{pro.title}}</h5>
                     <p class="card-text">{{pro.technologies_used}}</p>
                     <div class="all">
-                        <p>From: {{pro.location}}</p>
                         <p class="card-text"><small class="text-muted">posted:{{pro.pub_date|timesince}} ago</small></p>
 
                     </div>
-
-
                     <hr>
                     <div class="all">
                         <p class="card-text">By: {{pro.user}}</p>

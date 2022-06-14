@@ -14,6 +14,7 @@ class ProjectsPostForm(forms.ModelForm):
     class Meta:
        model = Projects
        fields = ['title', 'user', 'image', 'description', 'technologies_used', 'link']
+       
 
 
 class ProfileForm(forms.ModelForm):

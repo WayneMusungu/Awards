@@ -106,6 +106,9 @@ def profile(request):
     profile = Profile.objects.all()
     return render(request, 'profile.html', {"profile": profile, "image": image})
 
+
+
+@login_required(login_url='/accounts/login/')
 def updateprofile(request):
     current_user = request.user
     if request.method == 'POST':
